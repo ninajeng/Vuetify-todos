@@ -28,7 +28,7 @@ const filters = {
 
 const todos = ref(todoStorage.fetch());
 const newTodo = ref('');
-const editedTodo = ref({});
+const editedTodo = ref(null);
 const tab = ref('all');
 
 const filteredTodos = computed(() => filters[tab.value](todos.value));
@@ -47,6 +47,7 @@ function addTodo() {
     completed: false
   });
   newTodo.value = '';
+  tab.value = 'all';
 }
 
 function changeTodoStatus(todo) {
@@ -58,7 +59,7 @@ function editTodo() {
   if(!newTitle) return
   const index = todos.value.findIndex(todo => todo.id === editedTodo.value.id);
   todos.value[index].title = newTitle;
-  editedTodo.value = {};
+  editedTodo.value = null;
 }
 
 function removeTodo(todo) {
